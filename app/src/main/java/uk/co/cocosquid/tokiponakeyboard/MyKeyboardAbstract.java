@@ -19,6 +19,8 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
+import java.util.HashMap;
+
 public abstract class MyKeyboardAbstract extends LinearLayout implements View.OnLongClickListener, View.OnClickListener {
 
     // Input connection
@@ -35,6 +37,7 @@ public abstract class MyKeyboardAbstract extends LinearLayout implements View.On
 
     // Arrays
     protected SparseArray<String> keyValues = new SparseArray<>();
+    protected HashMap<String, String> stringToSitelenPona = new HashMap<>();
     protected String[] shortcuts;
     protected String[] words;
     protected String[] unofficialWords;
@@ -273,13 +276,22 @@ public abstract class MyKeyboardAbstract extends LinearLayout implements View.On
         return charOnLeft;
     }
 
-    protected String getWord(String shortcut) {
+    protected String getWord(String shortcut, boolean isKeyText) {
         for (int i = 0; i < shortcuts.length; i++) {
             if (shortcut.equals(shortcuts[i])) {
-                return words[i];
+                if (stringToSitelenPona.isEmpty() || isKeyText)
+                    return words[i];
+                else {
+                    System.out.println(words[i]);
+                    return stringToSitelenPona.get(words[i]);
+                }
             }
         }
         return "";
+    }
+
+    protected String getWord(String shortcut) {
+        return getWord(shortcut, false);
     }
 
     protected boolean isUnofficial(String word) {
@@ -295,10 +307,10 @@ public abstract class MyKeyboardAbstract extends LinearLayout implements View.On
         setColours();
     }
 
-    protected void moveCursorBackOne() {
+    protected void moveCursorBack(int i) {
         updateTextInfo();
-        int backOne = beforeCursorText.length() - 1;
-        inputConnection.setSelection(backOne, backOne);
+        int back = beforeCursorText.length() - i;
+        inputConnection.setSelection(back, back);
     }
 
     public void setColours() {
@@ -400,7 +412,7 @@ public abstract class MyKeyboardAbstract extends LinearLayout implements View.On
             if (doesShortcutExist(potentialShortcut)) {
 
                 // Key on last state
-                keyText = getWord(potentialShortcut);
+                keyText = getWord(potentialShortcut, true);
                 key.setText(keyText);
 
                 // Set the colours
@@ -414,7 +426,7 @@ public abstract class MyKeyboardAbstract extends LinearLayout implements View.On
 
             } else if (doesShortcutExist(finishShortcut(potentialShortcut))) {
 
-                keyText = getWord(finishShortcut(potentialShortcut));
+                keyText = getWord(finishShortcut(potentialShortcut), true);
                 key.setText(keyText);
                 if (potentialShortcut.length() > 1) {
 

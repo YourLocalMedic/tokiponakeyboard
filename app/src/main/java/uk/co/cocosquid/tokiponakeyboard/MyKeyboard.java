@@ -11,6 +11,8 @@ import android.widget.Button;
 
 import androidx.preference.PreferenceManager;
 
+import java.util.HashMap;
+
 public class MyKeyboard extends MyKeyboardAbstract {
 
     // Word construction
@@ -82,6 +84,157 @@ public class MyKeyboard extends MyKeyboardAbstract {
             key.setOnLongClickListener(this);
             key.setTextSize(18);
         }
+
+        stringToSitelenPona = new HashMap<String, String>()
+        {{
+            put("a", "󱤀");
+            put("akesi", "󱤁");
+            put("ala", "󱤂");
+            put("alasa", "󱤃");
+            put("ale", "󱤄");
+            put("anpa", "󱤅");
+            put("ante", "󱤆");
+            put("anu", "󱤇");
+            put("awen", "󱤈");
+            put("e", "󱤉");
+            put("en", "󱤊");
+            put("esun", "󱤋");
+            put("ijo", "󱤌");
+            put("ike", "󱤍");
+            put("ilo", "󱤎");
+            put("insa", "󱤏");
+            put("jaki", "󱤐");
+            put("jan", "󱤑");
+            put("jelo", "󱤒");
+            put("jo", "󱤓");
+            put("kala", "󱤔");
+            put("kalama", "󱤕");
+            put("kama", "󱤖");
+            put("kasi", "󱤗");
+            put("ken", "󱤘");
+            put("kepeken", "󱤙");
+            put("kili", "󱤚");
+            put("kiwen", "󱤛");
+            put("ko", "󱤜");
+            put("kon", "󱤝");
+            put("kule", "󱤞");
+            put("kulupu", "󱤟");
+            put("kute", "󱤠");
+            put("la", "󱤡");
+            put("lape", "󱤢");
+            put("laso", "󱤣");
+            put("lawa", "󱤤");
+            put("len", "󱤥");
+            put("lete", "󱤦");
+            put("li", "󱤧");
+            put("lili", "󱤨");
+            put("linja", "󱤩");
+            put("lipu", "󱤪");
+            put("loje", "󱤫");
+            put("lon", "󱤬");
+            put("luka", "󱤭");
+            put("lukin", "󱤮");
+            put("lupa", "󱤯");
+            put("ma", "󱤰");
+            put("mama", "󱤱");
+            put("mani", "󱤲");
+            put("meli", "󱤳");
+            put("mi", "󱤴");
+            put("mije", "󱤵");
+            put("moku", "󱤶");
+            put("moli", "󱤷");
+            put("monsi", "󱤸");
+            put("mu", "󱤹");
+            put("mun", "󱤺");
+            put("musi", "󱤻");
+            put("mute", "󱤼");
+            put("nanpa", "󱤽");
+            put("nasa", "󱤾");
+            put("nasin", "󱤿");
+            put("nena", "󱥀");
+            put("ni", "󱥁");
+            put("nimi", "󱥂");
+            put("noka", "󱥃");
+            put("o", "󱥄");
+            put("olin", "󱥅");
+            put("ona", "󱥆");
+            put("open", "󱥇");
+            put("pakala", "󱥈");
+            put("pali", "󱥉");
+            put("palisa", "󱥊");
+            put("pan", "󱥋");
+            put("pana", "󱥌");
+            put("pi", "󱥍");
+            put("pilin", "󱥎");
+            put("pimeja", "󱥏");
+            put("pini", "󱥐");
+            put("pipi", "󱥑");
+            put("poka", "󱥒");
+            put("poki", "󱥓");
+            put("pona", "󱥔");
+            put("pu", "󱥕");
+            put("sama", "󱥖");
+            put("seli", "󱥗");
+            put("selo", "󱥘");
+            put("seme", "󱥙");
+            put("sewi", "󱥚");
+            put("sijelo", "󱥛");
+            put("sike", "󱥜");
+            put("sin", "󱥝");
+            put("sina", "󱥞");
+            put("sinpin", "󱥟");
+            put("sitelen", "󱥠");
+            put("sona", "󱥡");
+            put("soweli", "󱥢");
+            put("suli", "󱥣");
+            put("suno", "󱥤");
+            put("supa", "󱥥");
+            put("suwi", "󱥦");
+            put("tan", "󱥧");
+            put("taso", "󱥨");
+            put("tawa", "󱥩");
+            put("telo", "󱥪");
+            put("tenpo", "󱥫");
+            put("toki", "󱥬");
+            put("tomo", "󱥭");
+            put("tu", "󱥮");
+            put("unpa", "󱥯");
+            put("uta", "󱥰");
+            put("utala", "󱥱");
+            put("walo", "󱥲");
+            put("wan", "󱥳");
+            put("waso", "󱥴");
+            put("wawa", "󱥵");
+            put("weka", "󱥶");
+            put("wile", "󱥷");
+            put("namako", "󱥸");
+            put("kin", "󱥹");
+            put("oko", "󱥺");
+            put("kipisi", "󱥻");
+            put("leko", "󱥼");
+            put("monsuta", "󱥽");
+            put("tonsi", "󱥾");
+            put("jasima", "󱥿");
+            put("kijetesantakalu", "󱦀");
+            put("soko", "󱦁");
+            put("meso", "󱦂");
+            put("epiku", "󱦃");
+            put("kokosila", "󱦄");
+            put("lanpan", "󱦅");
+            put("n", "󱦆");
+            put("misikeke", "󱦇");
+            put("ku", "󱦈");
+            put("[", "󱦐");
+            put("]", "󱦑");
+            put("[]", "󱦐󱦑");
+            put("_", "󱦒");
+            put("pake", "󱦠");
+            put("apeja", "󱦡");
+            put("majuna", "󱦢");
+            put("powe", "󱦣");
+
+        }};
+
 
         // Set the button strings
         keyValues.put(R.id.ali, "a");
@@ -161,7 +314,7 @@ public class MyKeyboard extends MyKeyboardAbstract {
                             writeShortcut("[%");
 
                             // Move cursor inside brackets
-                            moveCursorBackOne();
+                            moveCursorBack(1);
 
                             setBracket(true);
                         }
@@ -230,7 +383,7 @@ public class MyKeyboard extends MyKeyboardAbstract {
                 }
             }
             if (!suffix.isEmpty() && !nothingWritten) {
-                moveCursorBackOne();
+                moveCursorBack(1);
                 suffix = "";
             }
         } else {
@@ -318,62 +471,9 @@ public class MyKeyboard extends MyKeyboardAbstract {
     protected void delete() {
         if (currentShortcut.isEmpty()) {
 
-            // Delete some text
+            // Delete some text (wow this is much easier huh)
             updateTextInfo();
-            label:
-            for (int i = beforeCursorText.length() - 1; i >= 0; i--) {
-                String currentString = Character.toString(beforeCursorText.charAt(i));
-                switch (currentString) {
-                    case "\n":
-                    case "“":
-                        if (i == beforeCursorText.length() - 1) {
-                            inputConnection.deleteSurroundingText(1, 0);
-                        } else {
-                            inputConnection.deleteSurroundingText(beforeCursorText.length() - i - 1, 0);
-                        }
-                        break label;
-                    case " ":
-                    case "_":
-                    case ",":
-                    case "”":
-                    case ".":
-                    case ":":
-                    case "?":
-                    case "!":
-                        inputConnection.deleteSurroundingText(beforeCursorText.length() - i, 0);
-                        break label;
-                    case "]":
-
-                        // Move inside the brackets and delete from there
-                        inputConnection.setSelection(i, i);
-                        setBracket(true);
-                        delete();
-                        break label;
-
-                    case "[":
-
-                        // Delete everything from the opening bracket up to the closing bracket
-                        int endBracket = getEndBracketLocation();
-                        inputConnection.deleteSurroundingText(1, endBracket - beforeCursorText.length());
-                        //if (getNextCharacter().equals(" ")) {
-                        //    inputConnection.deleteSurroundingText(0, 1);
-                        //}
-                        setBracket(false);
-                        break label;
-                    //return;
-                }
-                if (i == 0) {
-
-                    // Start of the input was reached
-                    inputConnection.deleteSurroundingText(beforeCursorText.length(), 0);
-                }
-            }
-
-            if ("% |“ ".contains(getAdjacentCharacters())) {
-                inputConnection.deleteSurroundingText(0, 1);
-            } else if (" %|  | ,| ”| .| :| ?| !| \n".contains(getAdjacentCharacters())) {
-                inputConnection.deleteSurroundingText(1, 0);
-            }
+            inputConnection.deleteSurroundingText(2, 0);
         } else {
 
             // Cancel current input in progress
@@ -527,7 +627,7 @@ public class MyKeyboard extends MyKeyboardAbstract {
         }
 
         // Decide the correct word spacer to put before the word
-        String wordSpacer = " ";
+        String wordSpacer = "";
         if (cursorAtStart()) {
             wordSpacer = "";
         } else if (inBrackets) {
