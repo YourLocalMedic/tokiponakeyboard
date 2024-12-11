@@ -6,12 +6,14 @@ import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.widget.Button;
 
 import androidx.preference.PreferenceManager;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 public class MyKeyboard extends MyKeyboardAbstract {
 
@@ -232,7 +234,6 @@ public class MyKeyboard extends MyKeyboardAbstract {
             put("apeja", "󱦡");
             put("majuna", "󱦢");
             put("powe", "󱦣");
-
         }};
 
 
@@ -289,50 +290,17 @@ public class MyKeyboard extends MyKeyboardAbstract {
                 // Special key sent
                 if (!startKey.equals("%delete")) {
                     finishAction("finish");
-                    if (inBrackets && !startKey.equals("%]") && !startKey.equals("%[")) {
-                        action("%]", null);
-                    }
                 }
                 switch (startKey) {
-                    case "%]":
-
-                        // Move cursor to the next space (or the end of the input if none are found)
-                        int endBracketLocation = getEndBracketLocation();
-                        inputConnection.setSelection(endBracketLocation, endBracketLocation);
-
-                        // Place a closing bracket if it is missing
-                        if (currentText.charAt(endBracketLocation - 1) != ']') {
-                            write("]");
-                        }
-
-                        setBracket(false);
-                        break;
                     case "%[":
-                        if (inBrackets) {
-                            action("%]", null);
-                        } else {
-                            writeShortcut("[%");
-
-                            // Move cursor inside brackets
-                            moveCursorBack(1);
-
-                            setBracket(true);
-                        }
+                        write("󱦐");
                         break;
                     case "%“":
-                        if (quoteNestingLevel > 0) {
-                            write("”");
-                            if (!",.:?!\n".contains(getNextCharacter()) && !getNextCharacter().isEmpty()) {
-                                write(" ");
-                            }
-                        } else {
-                            writeShortcut("“%");
-                            if (getNextCharacter().equals(" ")) {
-                                inputConnection.deleteSurroundingText(0, 1);
-                            }
-                        }
+                        write("「");
                         break;
                     case "%.":
+                        write("󱦜");
+                        break;
                     case "%?":
                         write(Character.toString(startKey.charAt(1)));
                         //action(startKey.charAt(1) + "%", null);
@@ -397,21 +365,14 @@ public class MyKeyboard extends MyKeyboardAbstract {
                     // Long press actions for special keys
                     finishAction("finish");
                     switch (startKey) {
-                        case "%[":
-                            write(",");
+                        case "%[": //if bracket long pressed, write close bracket
+                            write("󱦑");
                             break;
-                        case "%“":
-                            if (quoteNestingLevel > 0) {
-                                writeShortcut("“%");
-                                if (getNextCharacter().equals(" ")) {
-                                    inputConnection.deleteSurroundingText(0, 1);
-                                }
-                            } else {
-                                action(startKey, null);
-                            }
+                        case "%“": //if bracket long pressed, write close bracket
+                            write("」");
                             break;
                         case "%.":
-                            write(":");
+                            write("󱦝");
                             break;
                         case "%?":
                             write("!");
@@ -470,12 +431,10 @@ public class MyKeyboard extends MyKeyboardAbstract {
 
     protected void delete() {
         if (currentShortcut.isEmpty()) {
-
-            // Delete some text (wow this is much easier huh)
-            updateTextInfo();
-            inputConnection.deleteSurroundingText(2, 0);
+            // Delete some text. using inputConnection.deleteSurroundingText(2, 0) causes a bug where if there is a one width char before a sp char it deletes the one width char and half the sp char
+            inputConnection.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DEL));
+            updateCurrentState();
         } else {
-
             // Cancel current input in progress
             currentShortcut = "";
             compoundFirstWordShortcut = "";
