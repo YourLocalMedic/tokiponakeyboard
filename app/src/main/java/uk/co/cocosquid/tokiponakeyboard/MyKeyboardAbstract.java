@@ -222,6 +222,14 @@ public abstract class MyKeyboardAbstract extends LinearLayout implements View.On
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        try
+        {
+            Thread.sleep(100);
+        }
+        catch(InterruptedException ex)
+        {
+            Thread.currentThread().interrupt();
+        }
         inputConnection.deleteSurroundingText(beforeCursorText.length()+afterCursorText.length(),beforeCursorText.length()+afterCursorText.length());
         inputConnection.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_PASTE));
         // Send the correct IME action specified by the editor

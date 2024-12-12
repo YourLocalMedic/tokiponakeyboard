@@ -79,6 +79,12 @@ public class TextToImage extends FileProvider {
         canvas.save();
         canvas.restore();
         String path = c.getFilesDir().getAbsolutePath() + "/abc.png";
+        try{
+            File fileToDelete = new File(path);
+            fileToDelete.delete();
+        }catch (Exception ex){
+            Log.i("er", String.valueOf(ex));
+        }
         FileOutputStream fos = new FileOutputStream(path);
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
         fos.flush();
