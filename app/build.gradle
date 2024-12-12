@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "uk.co.cocosquid.tokiponakeyboard"
-        minSdkVersion 23
+        minSdkVersion 24
         targetSdkVersion 29
         versionCode 8
         versionName "1.0.0-alpha.4"

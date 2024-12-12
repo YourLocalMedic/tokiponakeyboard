@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="uk.co.cocosquid.tokiponakeyboard">
-
     <application
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -9,7 +8,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:allowBackup="false">
-
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="uk.co.cocosquid.tokiponakeyboard.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
         <activity android:name=".TokiPonaIMESettings">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,7 +26,8 @@
 
         <service android:name="TokiPonaIME"
             android:label="@string/toki_pona_label"
-            android:permission="android.permission.BIND_INPUT_METHOD" >
+            android:permission="android.permission.BIND_INPUT_METHOD"
+            >
             <intent-filter>
                 <action android:name="android.view.InputMethod" />
             </intent-filter>

@@ -19,6 +19,9 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
+import org.w3c.dom.Text;
+
+import java.io.IOException;
 import java.util.HashMap;
 
 public abstract class MyKeyboardAbstract extends LinearLayout implements View.OnLongClickListener, View.OnClickListener {
@@ -212,10 +215,20 @@ public abstract class MyKeyboardAbstract extends LinearLayout implements View.On
         return false;
     }
 
-    protected void enter() {
-
+    protected void enter(){
+        TextToImage textToImage = new TextToImage();
+        try {
+            textToImage.draw((String) beforeCursorText+afterCursorText,inputMethodService.getApplicationContext());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        inputConnection.deleteSurroundingText(beforeCursorText.length()+afterCursorText.length(),beforeCursorText.length()+afterCursorText.length());
+        inputConnection.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_PASTE));
         // Send the correct IME action specified by the editor
         switch (editorInfo.imeOptions & (EditorInfo.IME_MASK_ACTION | EditorInfo.IME_FLAG_NO_ENTER_ACTION)) {
+            case EditorInfo.IME_ACTION_SEND:
+                inputConnection.performEditorAction(EditorInfo.IME_ACTION_SEND);
+                break;
             case EditorInfo.IME_ACTION_GO:
                 inputConnection.performEditorAction(EditorInfo.IME_ACTION_GO);
                 break;
@@ -224,12 +237,6 @@ public abstract class MyKeyboardAbstract extends LinearLayout implements View.On
                 break;
             case EditorInfo.IME_ACTION_SEARCH:
                 inputConnection.performEditorAction(EditorInfo.IME_ACTION_SEARCH);
-                break;
-            case EditorInfo.IME_ACTION_SEND:
-                inputConnection.performEditorAction(EditorInfo.IME_ACTION_SEND);
-                break;
-            default:
-                inputConnection.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_ENTER));
                 break;
         }
     }
@@ -314,77 +321,23 @@ public abstract class MyKeyboardAbstract extends LinearLayout implements View.On
     }
 
     public void setColours() {
-        switch (sharedPreferences.getString("themes", "default")) {
-            case "default":
+        // Set colours
+        letterKeyColour = 0xFF000000;
+        commonWordKeyColour = 0xFF000000;
+        specialKeyColour = 0xFF000000;
 
-                // Set colours
-                letterKeyColour = 0xFFbfd5ff;
-                commonWordKeyColour = 0xFF7fffd4;
-                specialKeyColour = 0xFF6f95df;
-
-                letterKeyTextColour = 0xFFffffff;
-                commonWordKeyTextColour = 0xFF00947f;
-                specialKeyTextColour = 0xFFffffff;
-
-                lastStateKeyColour = 0xFF7fffd4;
-                intermediateKeyColour = 0xFF00947f;
-                lastStateUnofficialKeyColour = 0xFFff947f;
-                intermediateUnofficialKeyColour = 0xFFff4f3f;
-
-                lastStateKeyTextColour = 0xFF00947f;
-                intermediateTextKeyColour = 0xFF7fffd4;
-                lastStateUnofficialKeyTextColour = 0xFFff4f3f;
-                intermediateTextUnofficialKeyColour = 0xFFff947f;
-
-                backgroundColour = 0xFF7faaff;
-                break;
-            case "light":
-
-                // Set colours
-                letterKeyColour = 0xFFffffff;
-                commonWordKeyColour = 0xFF7faaff;
-                specialKeyColour = 0xFFc0c0c0;
-
-                letterKeyTextColour = 0xFF101010;
-                commonWordKeyTextColour = 0xFFffffff;
-                specialKeyTextColour = 0xFF101010;
-
-                lastStateKeyColour = 0xFF7faaff;
-                intermediateKeyColour = 0xFF2E40A4;
-                lastStateUnofficialKeyColour = 0xFFff3f80;
-                intermediateUnofficialKeyColour = 0xFFaf1767;
-
-                lastStateKeyTextColour = 0xFFffffff;
-                intermediateTextKeyColour = 0xFFffffff;
-                lastStateUnofficialKeyTextColour = 0xFFffffff;
-                intermediateTextUnofficialKeyColour = 0xFFffffff;
-
-                backgroundColour = 0xFFe0e0e0;
-                break;
-            case "dark":
-
-                // Set colours
-                letterKeyColour = 0xFF202020;
-                commonWordKeyColour = 0xFF405580;
-                specialKeyColour = 0xFF101010;
-
-                letterKeyTextColour = 0xFFe0e0e0;
-                commonWordKeyTextColour = 0xFFffffff;
-                specialKeyTextColour = 0xFFe0e0e0;
-
-                lastStateKeyColour = 0xFF405580;
-                intermediateKeyColour = 0xFF172052;
-                lastStateUnofficialKeyColour = 0xFF802040;
-                intermediateUnofficialKeyColour = 0xFF580C34;
-
-                lastStateKeyTextColour = 0xFFffffff;
-                intermediateTextKeyColour = 0xFFffffff;
-                lastStateUnofficialKeyTextColour = 0xFFffffff;
-                intermediateTextUnofficialKeyColour = 0xFFffffff;
-
-                backgroundColour = 0xFF000000;
-                break;
-        }
+        letterKeyTextColour = 0xFFffffff;
+        commonWordKeyTextColour = 0xFFffffff;
+        specialKeyTextColour = 0xFFffffff;
+        lastStateKeyColour = 0xFF555555;
+        intermediateKeyColour = 0xFFaaaaaa;
+        lastStateUnofficialKeyColour = 0xFF555555;
+        intermediateUnofficialKeyColour = 0xFFaaaaaa;
+        lastStateKeyTextColour = 0xFFffffff;
+        intermediateTextKeyColour = 0xFFffffff;
+        lastStateUnofficialKeyTextColour = 0xFFffffff;
+        intermediateTextUnofficialKeyColour = 0xFFffffff;
+        backgroundColour = 0xFF222222;
     }
 
     public void setEditorInfo(EditorInfo ei) {

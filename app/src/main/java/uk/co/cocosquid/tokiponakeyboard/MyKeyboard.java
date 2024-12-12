@@ -511,66 +511,6 @@ public class MyKeyboard extends MyKeyboardAbstract {
         findViewById(R.id.keyboard).setBackgroundColor(backgroundColour);
     }
 
-    public void updateCurrentState() {
-
-        // Get the adjacent characters
-        String charOnRight = getNextCharacter();
-        String charOnLeft = getPreviousCharacter();
-
-        boolean adjust = true;
-        if ("],”.:?!\n".contains(charOnLeft) || " _],”.:?!\n".contains(charOnRight)) {
-
-            // Do not adjust cursor position
-            adjust = false;
-        }
-
-        int moveTo = 0;
-        int i;
-        label:
-        for (i = beforeCursorText.length() - 1; i >= 0; i--) {
-            String currentString = Character.toString(beforeCursorText.charAt(i));
-            switch (currentString) {
-                case "“":
-                    if (moveTo == 0) {
-                        moveTo = i + 1;
-                    }
-                    break;
-                case "\n":
-                    if (moveTo == 0) {
-                        moveTo = i + 1;
-                    }
-                    setBracket(false);
-                    break label;
-                case " ":
-                case "]":
-                    setBracket(false);
-                    break label;
-                case "_":
-                case "[":
-                    setBracket(true);
-                    break label;
-            }
-            if (i == 0) {
-                setBracket(false);
-                break;
-            }
-        }
-        if (adjust) {
-            if (moveTo == 0) {
-                moveTo = i;
-            }
-            inputConnection.setSelection(moveTo, moveTo);
-        }
-
-        // Ensure the correct quote is on the key
-        updateQuoteNestedLevel();
-        if (quoteNestingLevel > 0) {
-            ((Button) findViewById(R.id.quote)).setText("”");
-        } else {
-            ((Button) findViewById(R.id.quote)).setText("“");
-        }
-    }
-
     private void write(String toWrite) {
         if (inBrackets && ",:!".contains(toWrite)) {
             action("%]", null);
