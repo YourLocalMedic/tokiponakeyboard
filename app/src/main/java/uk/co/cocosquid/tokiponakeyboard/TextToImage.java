@@ -22,19 +22,21 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.reflect.Array;
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class TextToImage extends FileProvider {
-    void draw(String msg, Context c) throws IOException {
+    void draw(String msg, String name, Context c) throws IOException {
         int charsperline = 18;
         int msgLength = msg.codePointCount(0, msg.length());
         int linenum = (int) Math.ceil((float) msgLength / (float) charsperline);
         int width = charsperline*50 + 4;
         int height = 51*linenum + 8;
-
-        //String[] lines = new String[linenum];
+        String now = String.valueOf(System.currentTimeMillis());
+        Log.i("num",now);
         List<String> lines = new ArrayList<>();
         int lineStart = 0;
         int x;
@@ -78,13 +80,7 @@ public class TextToImage extends FileProvider {
         }
         canvas.save();
         canvas.restore();
-        String path = c.getFilesDir().getAbsolutePath() + "/abc.png";
-        try{
-            File fileToDelete = new File(path);
-            fileToDelete.delete();
-        }catch (Exception ex){
-            Log.i("er", String.valueOf(ex));
-        }
+        String path = c.getFilesDir().getAbsolutePath() + "/"+ now +".png";
         FileOutputStream fos = new FileOutputStream(path);
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
         fos.flush();
@@ -92,6 +88,19 @@ public class TextToImage extends FileProvider {
         Uri uri = FileProvider.getUriForFile(c, c.getPackageName() + ".provider", new File(path));
         Object systemService = c.getSystemService(Context.CLIPBOARD_SERVICE);
         ((ClipboardManager) systemService).setPrimaryClip(ClipData.newUri(c.getContentResolver(), null, uri));
+
+        //delete old files, files cannot be deleted immidietly because then they would not have time to be uploaded to discord
+        File[] files =  c.getFilesDir().listFiles();
+        assert files != null;
+        for (File file : files) {
+            String fileName = file.getName();
+            fileName = fileName.substring(0,fileName.length()-4); //chop .png off the end
+            long fileAge = Long.parseLong(fileName);
+            if(fileAge < Long.parseLong(now) - 3000){ //if the file is more than 30s old
+                file.delete();
+            }
+            Log.d("Files", "FileName:" + file.getName());
+        }
     }
 
     @Override

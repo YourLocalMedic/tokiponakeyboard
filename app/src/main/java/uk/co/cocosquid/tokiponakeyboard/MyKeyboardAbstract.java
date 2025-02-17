@@ -79,6 +79,7 @@ public abstract class MyKeyboardAbstract extends LinearLayout implements View.On
 
     protected int backgroundColour;
 
+    int imagesSentCount = 0;
     protected Button[] keys = new Button[28];
 
     public MyKeyboardAbstract(Context context) {
@@ -218,7 +219,8 @@ public abstract class MyKeyboardAbstract extends LinearLayout implements View.On
     protected void enter(){
         TextToImage textToImage = new TextToImage();
         try {
-            textToImage.draw((String) beforeCursorText+afterCursorText,inputMethodService.getApplicationContext());
+            textToImage.draw((String) beforeCursorText+afterCursorText,String.valueOf(imagesSentCount),inputMethodService.getApplicationContext());
+            imagesSentCount += 1;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
