@@ -93,13 +93,17 @@ public class TextToImage extends FileProvider {
         File[] files =  c.getFilesDir().listFiles();
         assert files != null;
         for (File file : files) {
-            String fileName = file.getName();
-            fileName = fileName.substring(0,fileName.length()-4); //chop .png off the end
-            long fileAge = Long.parseLong(fileName);
-            if(fileAge < Long.parseLong(now) - 3000){ //if the file is more than 30s old
-                file.delete();
+            try {
+                String fileName = file.getName();
+                fileName = fileName.substring(0, fileName.length() - 4); //chop .png off the end
+                long fileAge = Long.parseLong(fileName);
+                if (fileAge < Long.parseLong(now) - 3000) { //if the file is more than 30s old
+                    file.delete();
+                }
+                Log.d("Files", "FileName:" + file.getName());
+            } catch (Exception ignored){
+
             }
-            Log.d("Files", "FileName:" + file.getName());
         }
     }
 
