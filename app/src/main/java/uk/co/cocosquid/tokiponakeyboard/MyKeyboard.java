@@ -94,6 +94,7 @@ public class MyKeyboard extends MyKeyboardAbstract {
             put("ala", "󱤂");
             put("alasa", "󱤃");
             put("ale", "󱤄");
+            put("ali", "󱤄");
             put("anpa", "󱤅");
             put("ante", "󱤆");
             put("anu", "󱤇");

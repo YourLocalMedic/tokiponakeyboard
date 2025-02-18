@@ -224,15 +224,15 @@ public abstract class MyKeyboardAbstract extends LinearLayout implements View.On
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        inputConnection.deleteSurroundingText(beforeCursorText.length()+afterCursorText.length(),beforeCursorText.length()+afterCursorText.length());
         try
         {
-            Thread.sleep(100);
+            Thread.sleep(200);
         }
         catch(InterruptedException ex)
         {
             Thread.currentThread().interrupt();
         }
-        inputConnection.deleteSurroundingText(beforeCursorText.length()+afterCursorText.length(),beforeCursorText.length()+afterCursorText.length());
         inputConnection.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_PASTE));
         // Send the correct IME action specified by the editor
         switch (editorInfo.imeOptions & (EditorInfo.IME_MASK_ACTION | EditorInfo.IME_FLAG_NO_ENTER_ACTION)) {
@@ -333,8 +333,8 @@ public abstract class MyKeyboardAbstract extends LinearLayout implements View.On
     public void setColours() {
         // Set colours
         letterKeyColour = 0xFF000000;
-        commonWordKeyColour = 0xFF000000;
-        specialKeyColour = 0xFF000000;
+        commonWordKeyColour = 0xFF555555;
+        specialKeyColour = 0xFF555555;
 
         letterKeyTextColour = 0xFFffffff;
         commonWordKeyTextColour = 0xFFffffff;
