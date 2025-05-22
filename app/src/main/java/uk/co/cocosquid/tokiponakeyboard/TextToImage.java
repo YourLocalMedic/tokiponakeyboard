@@ -59,7 +59,7 @@ public class TextToImage extends FileProvider {
         Canvas canvas = new Canvas(bitmap);
         canvas.drawColor(Color.TRANSPARENT);
         Paint paint = new Paint();
-        Typeface sitelenpona = Typeface.createFromAsset(c.getAssets(),"fairfaxhd.ttf");
+        Typeface sitelenpona = Typeface.createFromAsset(c.getAssets(),"JetBrainsMono-Medium-Nasin-Nanpa.otf");
         paint.setTypeface(sitelenpona);
         paint.setTextAlign(Paint.Align.LEFT);
         paint.setAntiAlias(true);
