@@ -34,7 +34,7 @@ public class TextToImage extends FileProvider {
         int msgLength = msg.codePointCount(0, msg.length());
         int linenum = (int) Math.ceil((float) msgLength / (float) charsperline);
         int width = charsperline*50 + 4;
-        int height = 51*linenum + 8;
+        int height = 55*linenum + 8;
         String now = String.valueOf(System.currentTimeMillis());
         Log.i("num",now);
         List<String> lines = new ArrayList<>();
